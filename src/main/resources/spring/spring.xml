@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://code.alibabatech.com/schema/dubbo
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context.xsd">
+	<context:component-scan base-package="dubbo.service" />
+
+	<context:property-placeholder location="classpath:app.properties"
+		ignore-resource-not-found="true" ignore-unresolvable="true"
+		file-encoding="UTF-8" />
+	<!-- 提供方应用信息，用于计算依赖关系 -->
+	<dubbo:application name="provider" />
+
+	<!-- 使用zookeeper注册中心暴露服务地址 -->
+	<dubbo:registry protocol="zookeeper" address="${dubbo.zookeeper.center}"
+		file="${dubbo.app.name}.properties" />
+
+	<dubbo:provider protocol="dubbo" port="-1" accesslog="true"
+		threadpool="fixed" threads="500" />
+
+	<dubbo:service interface="dubbo.service.DemoService" ref="demoServiceImpl"
+		group="demo_dubbo" version="1.0.0" timeout="5000" />
+</beans>
