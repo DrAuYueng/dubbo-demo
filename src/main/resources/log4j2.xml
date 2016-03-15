@@ -32,7 +32,7 @@
 		</Async>
 	</Appenders>
 	<Loggers>
-		<Root level="INFO" includeLocation="true">
+		<Root level="TRACE" includeLocation="true">
 			<AppenderRef ref="consoleAppender" />
 			<AppenderRef ref="allAsyncAppender" />
 		</Root>
